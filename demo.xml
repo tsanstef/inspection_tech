@@ -1,0 +1,338 @@
+<openerp>
+    <data>
+        <record id="object0" model="inspection_tech.work_order">
+            <field name="name">Work Order 001</field> 
+            <field name="purchase_order">PO12457</field>
+            <field eval="time.strftime('%Y-%m-20')" name="date"/> 
+            <field name="state">draft</field> 
+            <field name="descr">Sample Work Order description</field>
+            <field name="customer" ref="base.res_partner_1"/>           
+        </record>
+        <record id="task01" model="inspection_tech.work_order_task">
+            <field name="name">WO001 Task 1</field> 
+            <field name="task_type">service</field>
+            <field name="notes">Some notes</field> 
+            <field name="state">inprocess</field> 
+            <field name="descr">Task 1 description</field>
+            <field name="wo_id" ref="object0"/>            
+        </record>
+        <record id="task02" model="inspection_tech.work_order_task">
+            <field name="name">WO001 Task 2</field> 
+            <field name="task_type">inspection</field>
+            <field name="notes">Some notes</field>
+            <field name="state">done</field> 
+            <field name="descr">Task 2 description</field>
+            <field name="wo_id" ref="object0"/>            
+        </record>
+        
+        
+        <record id="object1" model="inspection_tech.work_order">
+            <field name="name">Work Order 002</field> 
+            <field name="purchase_order">PO78965</field>
+            <field eval="time.strftime('%Y-%m-20')" name="date"/> 
+            <field name="state">done</field> 
+            <field name="descr">Sample Work Order in a done state</field>
+            <field name="customer" ref="base.res_partner_2"/>            
+        </record>
+        <record id="object2" model="inspection_tech.work_order">
+            <field name="name">Work Order 003</field> 
+            <field name="purchase_order">PO78965</field>
+            <field eval="time.strftime('%Y-%m-20')" name="date"/> 
+            <field name="state">done</field> 
+            <field name="descr">Sample Work Order in a done state</field>
+            <field name="customer" ref="base.res_partner_7"/>            
+        </record>
+        
+        <record id="object3" model="inspection_tech.work_order">
+            <field name="name">Work Order 004</field> 
+            <field name="purchase_order">PO6666</field>
+            <field eval="time.strftime('%Y-%m-20')" name="date"/> 
+            <field name="state">inprocess</field> 
+            <field name="descr">Sample Work Order description (in process)</field>
+            <field name="customer" ref="base.res_partner_1"/>           
+        </record>
+        <record id="task31" model="inspection_tech.work_order_task">
+            <field name="name">WO003 Task 1</field> 
+            <field name="task_type">service</field>
+            <field name="notes">Some notes for task 31</field> 
+            <field name="state">inprocess</field> 
+            <field name="descr">Task 1 description</field>
+            <field name="wo_id" ref="object3"/>            
+        </record>
+        <record id="task32" model="inspection_tech.work_order_task">
+            <field name="name">WO003 Task 2</field> 
+            <field name="task_type">inspection</field>
+            <field name="notes">Some notes for task 32</field>
+            <field name="state">done</field> 
+            <field name="descr">Task 2 description</field>
+            <field name="wo_id" ref="object3"/>            
+        </record>
+        
+        <!-- equipment types -->
+        <record id="eqt_sling" model="inspection_tech.equipment_type">
+            <field name="name">Sling</field>          
+        </record>
+        <record id="spec_S1" model="inspection_tech.equipment_spec">
+            <field name="name">Manufacturer</field> 
+            <field name="equipment_type_id" ref="eqt_sling"/>
+            <field name="order_no">0</field>             
+        </record>
+        <record id="spec_S2" model="inspection_tech.equipment_spec">
+            <field name="name">Type</field> 
+            <field name="equipment_type_id" ref="eqt_sling"/>
+            <field name="order_no">1</field>            
+        </record>
+        <record id="spec_S3" model="inspection_tech.equipment_spec">
+            <field name="name">Size</field> 
+            <field name="equipment_type_id" ref="eqt_sling"/>
+            <field name="order_no">2</field>            
+        </record>
+        <record id="spec_S4" model="inspection_tech.equipment_spec">
+            <field name="name">Length</field> 
+            <field name="equipment_type_id" ref="eqt_sling"/> 
+            <field name="order_no">3</field>           
+        </record>
+        <record id="ip_s1" model="inspection_tech.inspection_point">
+            <field name="name">Sling Inspection</field> 
+            <field name="equipment_type_id" ref="eqt_sling"/>
+            <field name="order_no">0</field>            
+        </record>
+        
+        <record id="eqt_n1" model="inspection_tech.equipment_type">
+            <field name="name">Lifting Support Structure</field>          
+        </record>
+        <record id="spec_11" model="inspection_tech.equipment_spec">
+            <field name="name">Specific Location</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">0</field>            
+        </record>
+        <record id="spec_12" model="inspection_tech.equipment_spec">
+            <field name="name">Make</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">1</field>            
+        </record>
+        <record id="spec_13" model="inspection_tech.equipment_spec">
+            <field name="name">Model</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">2</field>            
+        </record>
+        <record id="spec_14" model="inspection_tech.equipment_spec">
+            <field name="name">Type</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">3</field>            
+        </record>
+        <record id="spec_15" model="inspection_tech.equipment_spec">
+            <field name="name">Serial No</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">4</field>            
+        </record>
+        <record id="spec_16" model="inspection_tech.equipment_spec">
+            <field name="name">ID No</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/> 
+            <field name="order_no">5</field>           
+        </record>
+        <record id="spec_17" model="inspection_tech.equipment_spec">
+            <field name="name">Capacity</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">6</field>            
+        </record>
+        <record id="spec_18" model="inspection_tech.equipment_spec">
+            <field name="name">Size</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">7</field>            
+        </record>
+        <record id="ip_11" model="inspection_tech.inspection_point">
+            <field name="name">Capacity</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">0</field>            
+        </record>
+        <record id="ip_12" model="inspection_tech.inspection_point">
+            <field name="name">Frame</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">1</field>            
+        </record>
+        <record id="ip_13" model="inspection_tech.inspection_point">
+            <field name="name">Stuctural Welds</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">2</field>            
+        </record>
+        <record id="ip_14" model="inspection_tech.inspection_point">
+            <field name="name">Hardware</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">3</field>            
+        </record>
+        <record id="ip_15" model="inspection_tech.inspection_point">
+            <field name="name">System Level</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">4</field>            
+        </record>
+        <record id="ip_16" model="inspection_tech.inspection_point">
+            <field name="name">Sec Restraint</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">5</field>            
+        </record>
+        <record id="ip_17" model="inspection_tech.inspection_point">
+            <field name="name">End Trucks</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">6</field>            
+        </record>
+        <record id="ip_18" model="inspection_tech.inspection_point">
+            <field name="name">End stops / Bumpers</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">7</field>            
+        </record>
+        <record id="ip_19" model="inspection_tech.inspection_point">
+            <field name="name">Runway / Load Beam</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">8</field>            
+        </record>
+        <record id="ip_20" model="inspection_tech.inspection_point">
+            <field name="name">Splice Joints </field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">9</field>            
+        </record>
+        <record id="ip_21" model="inspection_tech.inspection_point">
+            <field name="name">Drive System</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">10</field>            
+        </record>
+        <record id="ip_22" model="inspection_tech.inspection_point">
+            <field name="name">Load Test</field> 
+            <field name="equipment_type_id" ref="eqt_n1"/>
+            <field name="order_no">11</field>            
+        </record>
+        
+        
+        
+        <record id="eqt_n2" model="inspection_tech.equipment_type">
+            <field name="name">Automotive Jack</field>          
+        </record>
+        <record id="spec_21" model="inspection_tech.equipment_spec">
+            <field name="name">Specific Location</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">0</field>            
+        </record>
+        <record id="spec_22" model="inspection_tech.equipment_spec">
+            <field name="name">Make</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">1</field>            
+        </record>
+        <record id="spec_23" model="inspection_tech.equipment_spec">
+            <field name="name">Model</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/> 
+            <field name="order_no">2</field>           
+        </record>
+        <record id="spec_24" model="inspection_tech.equipment_spec">
+            <field name="name">Serial No</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">3</field>            
+        </record>
+        <record id="spec_25" model="inspection_tech.equipment_spec">
+            <field name="name">ID No</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">4</field>            
+        </record>
+        <record id="spec_26" model="inspection_tech.equipment_spec">
+            <field name="name">Type</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">5</field>            
+        </record>
+        <record id="spec_27" model="inspection_tech.equipment_spec">
+            <field name="name">Color</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">6</field>            
+        </record>
+        <record id="spec_28" model="inspection_tech.equipment_spec">
+            <field name="name">Capacity</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">7</field>            
+        </record>
+        <record id="spec_29" model="inspection_tech.equipment_spec">
+            <field name="name">Powered By</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">8</field>            
+        </record>
+        <record id="spec_210" model="inspection_tech.equipment_spec">
+            <field name="name">Accessories</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">9</field>            
+        </record>
+        <record id="spec_211" model="inspection_tech.equipment_spec">
+            <field name="name">Other 1</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">10</field>            
+        </record>
+        <record id="spec_212" model="inspection_tech.equipment_spec">
+            <field name="name">Other 2</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/> 
+            <field name="order_no">11</field>           
+        </record>
+        <record id="ip_23" model="inspection_tech.inspection_point">
+            <field name="name">Capacity</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">0</field>            
+        </record>
+        <record id="ip_24" model="inspection_tech.inspection_point">
+            <field name="name">ID Placard</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">1</field>            
+        </record>        
+        <record id="ip_25" model="inspection_tech.inspection_point">
+            <field name="name">Welds</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">2</field>            
+        </record>
+        <record id="ip_26" model="inspection_tech.inspection_point">
+            <field name="name">Base</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">3</field>            
+        </record>
+        
+        <record id="ip_27" model="inspection_tech.inspection_point">
+            <field name="name">Ram</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">4</field>            
+        </record>
+        <record id="ip_28" model="inspection_tech.inspection_point">
+            <field name="name">Handle</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">5</field>            
+        </record>      
+        <record id="ip_29" model="inspection_tech.inspection_point">
+            <field name="name">Release Valve</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">6</field>            
+        </record>
+        <record id="ip_30" model="inspection_tech.inspection_point">
+            <field name="name">Actuator Assembly</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">7</field>            
+        </record>
+        <record id="ip_31" model="inspection_tech.inspection_point">
+            <field name="name">Lift Platform</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">8</field>            
+        </record>
+        <record id="ip_32" model="inspection_tech.inspection_point">
+            <field name="name">Controls</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">9</field>            
+        </record>
+        <record id="ip_33" model="inspection_tech.inspection_point">
+            <field name="name">Hydraulics/Pneumatics</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">10</field>            
+        </record> 
+        <record id="ip_34" model="inspection_tech.inspection_point">
+            <field name="name">Casters</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">11</field>            
+        </record>
+        <record id="ip_35" model="inspection_tech.inspection_point">
+            <field name="name">Load Test</field> 
+            <field name="equipment_type_id" ref="eqt_n2"/>
+            <field name="order_no">12</field>            
+        </record>   
+
+    </data>
+</openerp>

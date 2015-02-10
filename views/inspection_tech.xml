@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="work_order_form_view">
+            <field name="name">work_order.form</field>
+            <field name="model">inspection_tech.work_order</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button string="Confirm" type="object" name="action_confirm"
+                                states="task_completed, inprocess" class="oe_highlight" />
+                        <button string="Start" type="object" name="action_start"
+                                states="draft" class="oe_highlight"/>
+                        <button string="Reopen" type="object" name="action_start"
+                                states="done" class="oe_highlight"/>
+                                
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label string="Work Order"/>
+                            <field name="name"  class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <!-- separator string="General"/-->
+                                <field name="customer"/>
+                                <field name="date"/>
+                            </group>
+                    
+                            <group>
+                                <!-- separator string="References"/ -->
+                                <field name="purchase_order"/>
+                                <field name="source"/>
+                                <field name="accepted_by"/>
+                            </group>
+                            
+                        </group>
+                        
+                        <notebook>
+                            <page string="Tasks">
+                                <field name="task_ids">
+                                    <form string="Task Details">
+                                        <header>
+                                            <button string="Confirm" type="object" name="action_confirm"
+                                                    states="inprocess" class="oe_highlight" />
+                                            <button string="Start" type="object" name="action_start"
+                                                    states="draft" class="oe_highlight"/>
+                                            <button string="Reopen" type="object" name="action_start"
+                                                    states="done" class="oe_highlight"/>      
+                                            <field name="state" widget="statusbar"/>
+                                        </header>
+                                        <sheet>
+                                            <h1>
+                                                <field name="name" nolabel="1" readonly="0"/>    
+                                            </h1>
+                                            <group>
+                                                <group>
+                                                    <field name="task_type"  class="oe_inline"/>
+                                                    <field name="descr"/>
+                                                </group>
+                                        
+                                                <group>
+                                                    <!-- field name="wo_id"/-->
+                                                    <field name="compl_date"/>
+                                                </group>
+                                                
+                                            </group>
+                                            <notebook>
+                                                <page string="Notes">
+                                                    <field name="notes" nolabel="1"/>
+                                                </page>
+                                            </notebook>
+                                        </sheet>
+                                    </form>
+                                    <tree string="Tasks" editable="bottom"> <!-- create="0"--> 
+                                        <button string="details"
+                                                icon="STOCK_FIND_AND_REPLACE" 
+                                                type="action"
+                                                name="inspection_tech.work_order_task_action_3"/>                                       
+                                        <field name="id" invisible="1"/>
+                                        <field name="task_type"/>
+                                        <field name="equipment_customer_id"/>
+                                        <field name="name"/>
+                                        <field name="state"/>
+                                        <field name="spec_line" invisible="1"/>
+                                        <field name="inspection_line" invisible="1"/> 
+                                    </tree>
+                                    
+                                </field>
+                            </page>
+                            <page string="Description">
+                                <field name="descr" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="work_order_search_view">
+            <field name="name">work_order.search</field>
+            <field name="model">inspection_tech.work_order</field>
+            <field name="arch" type="xml">
+                <search string="Search Work Orders">
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Source Document" domain="[]" context="{'group_by':'source'}"/>
+                        <filter string="Purchase Order" domain="[]" context="{'group_by':'purchase_order'}"/>
+                        <filter string="Order Date" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="work_order_tree" model="ir.ui.view">
+            <field name="name">work_order.tree</field>
+            <field name="model">inspection_tech.work_order</field> 
+            <field name="arch" type="xml">
+                <tree string="Work Orders">
+                    <field name="name"/>
+                    <field name="customer"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="work_order_task_tree" model="ir.ui.view">
+            <field name="name">work_order_task.tree</field>
+            <field name="model">inspection_tech.work_order_task</field> 
+            <field name="arch" type="xml">
+                <tree string="Work Order Tasks">
+                    <field name="wo_id"/>
+                    <field name="name"/>
+                    <field name="task_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="work_order_task_form_view">
+            <field name="name">work_order_task.form</field>
+            <field name="model">inspection_tech.work_order_task</field>
+            <field name="arch" type="xml">
+                <form string="Task">
+                    <header>
+                        <button string="Confirm" type="object" name="action_confirm"
+                                states="inprocess" class="oe_highlight" />
+                        <button string="Start" type="object" name="action_start"
+                                states="draft" class="oe_highlight"/>
+                        <button string="Reopen" type="object" name="action_start"
+                                states="done" class="oe_highlight"/>      
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <label string="Service " attrs="{'invisible': [('task_type','not in',('service'))]}"/>
+                            <label string="Inspection " attrs="{'invisible': [('task_type','in',('inspection'))]}"/>
+                            <field name="name"  class="oe_inline"/>
+                            
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="task_type"  class="oe_inline"/>
+                                <field name="descr"/>
+                                <field name="equipment_customer_id"/>
+                            </group>
+                    
+                            <group>
+                                <field name="wo_id"/>
+                                <field name="compl_date"/>
+                                <field name="inspector"/>
+                            </group>
+                            
+                        </group>
+                        <notebook>
+                            <page string="Specifications">
+                                <field name="spec_line">
+                                    <tree string="Specification List">
+                                        <field name="order_no" invisible="1"/>                                       
+                                        <field name="name"/>
+                                        <field name="spec_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Inspection Points" 
+                                    attrs="{'invisible': [('task_type','=','service')]}">
+                                <field name="inspection_line">
+                                    <tree string="Point List" editable="bottom">
+                                        <field name="order_no" invisible="1"/>                                       
+                                        <field name="name"/>
+                                        <field name="point_value"/>
+                                        <field name="point_comment"/>
+                                        <field name="image_small" widget="image"/>
+                                        <button icon="terp-stock_zoom"
+                                            class="proven_photo" 
+                                            string="Inspection Point Image" 
+                                            name="inspection_tech.inspection_point_action_3" 
+                                            type="action" 
+                                            attrs="{'invisible':['|',('image_small','=',False),('image_small','=',None)]}"/>    
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="work_order_task_search_view">
+            <field name="name">work_order_task.search</field>
+            <field name="model">inspection_tech.work_order_task</field>
+            <field name="arch" type="xml">
+                <search string="Search Tasks">
+                    <field name="wo_id"/>
+                    <field name="name"/>
+                    <field name="descr"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Work Order" domain="[]" context="{'group_by':'wo_id'}"/>
+                        <filter string="Type" domain="[]" context="{'group_by':'task_type'}"/>
+                        <filter string="Completion Date" domain="[]" context="{'group_by':'compl_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="work_order_list_action">
+            <field name="name">Work Orders</field>
+            <field name="res_model">inspection_tech.work_order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="work_order_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first work order
+                </p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="work_order_task_action_2">
+            <field name="name">Work Order Task View</field>
+            <field name="res_model">inspection_tech.work_order_task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'res_id':active_id}</field>
+        </record>
+        
+        <record model="ir.actions.server" id="work_order_task_action_3">
+            <field name="name">Go to Task Details</field>
+            <field name="model_id" ref="model_inspection_tech_work_order"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = {
+                    "type": "ir.actions.act_window",
+                    "view_mode": "form",
+                    "res_model": "inspection_tech.work_order_task",
+                    "res_id": context.get('active_id'),
+                }
+                
+            </field>
+        </record>
+        
+        <record id="view_inspection_point_photo" model="ir.ui.view">
+            <field name="name">Inspection Point Photo</field>
+            <field name="model">inspection_tech.wo.task.point</field>
+            <field name="arch" type="xml">
+                <form string="Inspection Point Photo">
+                    <group>
+                        <field name="image" widget="image" colspan="4" nolabel="1"/>
+                    </group>                    
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.server" id="inspection_point_action_3">
+            <field name="name">Go to Photo</field>
+            <field name="model_id" ref="model_inspection_tech_work_order_task"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = {
+                    "type": "ir.actions.act_window",
+                    "view_mode": "form",
+                    "view_name": "view_inspection_point_photo",
+                    "target": "new",
+                    "res_model": "inspection_tech.wo.task.point",
+                    "res_id": context.get('active_id'),
+                }
+                
+            </field>
+        </record>
+        
+        
+        <record id="ir_go_to_task_details" model="ir.values">
+            <field name="name">Go to Task Details bash</field>
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'inspection_tech.work_order_task'" name="model"/>
+            <field name="task_type">Open Details</field>
+            <field eval="'ir.actions.server,%d'%work_order_task_action_3" name="value"/>
+        </record>
+        
+        <record id="ir_go_to_point_details" model="ir.values">
+            <field name="name">Go to Point Details bash</field>
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'inspection_tech.wo.task.point'" name="model"/>
+            <field name="task_type">Open Details</field>
+            <field eval="'ir.actions.server,%d'%inspection_point_action_3" name="value"/>
+        </record>    
+        
+        <record model="ir.actions.act_window" id="work_order_task_action">
+            <field name="name">Work Order Tasks</field>
+            <field name="res_model">inspection_tech.work_order_task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="work_order_task_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create a task</p>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="work_order_inspection_action">
+            <field name="name">Inspections</field>
+            <field name="res_model">inspection_tech.work_order_task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('task_type', '=', 'inspection')]</field>
+            <field name="search_view_id" ref="work_order_task_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create an inspection</p>
+            </field>
+        </record>
+        
+
+        <!-- top level menu: no paret -->
+        <menuitem id="main_inspection_menu" name="Inspections"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="inspection_menu" name="Inspection Orders"
+                  parent="main_inspection_menu"/>
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+        <menuitem id="work_order_menu" 
+                name="Work Orders" 
+                parent="inspection_menu"
+                action="work_order_list_action"/>
+        <menuitem id="work_order_inspection_menu" 
+                name="Inspections" 
+                parent="inspection_menu"
+                action="work_order_inspection_action"/>
+        <menuitem id="work_order_task_menu" 
+                name="Tasks" 
+                parent="inspection_menu"
+                action="work_order_task_action"/>
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp>

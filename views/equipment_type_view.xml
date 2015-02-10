@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="equipment_type_form_view">
+            <field name="name">equipment_type.form</field>
+            <field name="model">inspection_tech.equipment_type</field>
+            <field name="arch" type="xml">
+                <form string="Equipment Type">
+                    <header></header>
+                    <sheet>
+                        <h1>
+                            <label string="Equipment Type: "/>
+                            <field name="name"  class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <!-- separator string="General"/-->
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Specifications">
+                                <field name="specification_line">
+                                    <tree string="Specification Name" editable="bottom">
+                                        <field name="order_no" widget="handle"/>                                       
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Inspection Points">
+                                <field name="inspection_line">
+                                    <tree string="Inspection Points" editable="bottom">
+                                        <field name="order_no" widget="handle"/>                                       
+                                        <field name="name"/>
+                                        <field name="point_header"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="equipment_type_search_view">
+            <field name="name">equipment_type.search</field>
+            <field name="model">inspection_tech.equipment_type</field>
+            <field name="arch" type="xml">
+                <search string="Search Equipment Types">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        
+        <record id="equipment_type_tree" model="ir.ui.view">
+            <field name="name">equipment_type.tree</field>
+            <field name="model">inspection_tech.equipment_type</field> 
+            <field name="arch" type="xml">
+                <tree string="Equipment Types">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record model="ir.ui.view" id="equipment_form_view">
+            <field name="name">equipment.form</field>
+            <field name="model">inspection_tech.equipment</field>
+            <field name="arch" type="xml">
+                <form string="Equipment">
+                    <header></header>
+                    <sheet>
+                        <h1>
+                            <label string="Equipment : "/>
+                            <field name="name"  class="oe_inline"/>
+                            <field name="photo" widget="image" class="oe_avatar oe_right"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="equipment_type_id"/> 
+                                        <!-- on_change="onchange_equipment_type_id(equipment_type_id)"/ -->
+                            </group>
+                            <group>
+                                <field name="partner_id" context="{'show_address': 1}" options='{"always_reload": True}'/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Specifications">
+                                <field name="equip_specification_line">
+                                    <tree string="Specification" editable="bottom">                                       
+                                        <field name="order_no" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="spec_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+                
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="equipment_search_view">
+            <field name="name">equipment.search</field>
+            <field name="model">inspection_tech.equipment</field>
+            <field name="arch" type="xml">
+                <search string="Search Equipment">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="equipment_type_id"/>
+                </search>
+            </field>
+        </record>
+        
+        <record id="equipment_type_tree" model="ir.ui.view">
+            <field name="name">equipment.tree</field>
+            <field name="model">inspection_tech.equipment</field> 
+            <field name="arch" type="xml">
+                <tree string="Equipment Types">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="equipment_type_id"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="equipment_type_list_action">
+            <field name="name">Equipment Types</field>
+            <field name="res_model">inspection_tech.equipment_type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="equipment_type_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create an Equipment Type.</p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="equipment_list_action">
+            <field name="name">Equipments</field>
+            <field name="res_model">inspection_tech.equipment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="equipment_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create an new customer Equipment.</p>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="specification_list_action">
+            <field name="name">Specifications (Test) </field>
+            <field name="res_model">inspection_tech.equipment_spec</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create Spec (use for test purposes).</p>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="eq_specification_list_action">
+            <field name="name">Equipment Specifications (Test) </field>
+            <field name="res_model">inspection_tech.equipment.specification</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create Equipment Spec (use for test purposes).</p>
+            </field>
+        </record>
+        
+    
+        <menuitem id="equipment_menu" 
+                name="Equipments" 
+                parent="configuration_menu"
+                action="equipment_list_action"/>
+        
+        <menuitem id="equipment_type_menu" 
+                name="Equipment Types" 
+                parent="configuration_menu"
+                action="equipment_type_list_action"/>
+        
+        <menuitem id="specification_menu" 
+                name="Specifications (Test)" 
+                parent="configuration_menu"
+                action="specification_list_action"/>
+                
+        <menuitem id="eq_specification_menu" 
+                name="Equipment Specifications (Test)" 
+                parent="configuration_menu"
+                action="eq_specification_list_action"/>
+        
+        <!-- Full id location:
+             action="openacademy.course_list_action"
+             It is not required when it is the same module -->
+    </data>
+</openerp>

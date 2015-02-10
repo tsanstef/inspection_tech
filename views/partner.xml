@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <openerp>
+    <data>
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="partner_instructor_form_view">
+            <field name="name">partner.instructor</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Work Orders">
+                        <field name="wo_ids"/>
+                        <div class="oe_button_box oe_right">
+                            <button type="action" class="oe_link"
+                                string="See all orders" 
+                                name="%(inspection_tech.work_order_list_action)d" 
+                                context="{'search_default_customer': active_id, 'default_customer' : [active_id]}"/> 
+                        </div>
+                        <separator string=""/>
+                    </page>
+                    <page string="Inspections">
+                        <field name="inspection_ids"/>
+                        <div class="oe_button_box oe_right">
+                            <button type="action" class="oe_link"
+                                string="See all inspections" 
+                                name="%(inspection_tech.work_order_inspection_action)d" 
+                                context="{'search_default_customer': active_id, 'default_customer' : [active_id]}"/> 
+                        </div>
+                        <separator string=""/>
+                    </page> 
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="contact_list_action">
+            <field name="name">Contacts</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="configuration_menu" name="Configuration"
+                  parent="main_inspection_menu"/>
+        <menuitem id="contact_menu" name="Contacts"
+                  parent="configuration_menu"
+                  action="contact_list_action"/>
+    </data>
+</openerp>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <!-- Inspection Result Type-->
+        <record id="view_inspection_result_type_tree" model="ir.ui.view">
+            <field name="name">inspection_result.type</field>
+            <field name="model">inspection_tech.inspection_result.type</field>
+            <field name="arch" type="xml">
+                <tree string="Inspection Result Type" editable="bottom">
+                    <field name="orderno" widget="handle"/>
+                    <field name="name"/>                    
+                </tree>             
+            </field>
+        </record>
+        
+        <record id="view_inspection_result_type_form" model="ir.ui.view">
+            <field name="name">inspection_result.type</field>
+            <field name="model">inspection_tech.inspection_result.type</field>
+            <field name="arch" type="xml">
+                <form string="Inspection Result Type" version="7.0">                    
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_inspection_result_type_rfq" model="ir.actions.act_window">
+            <field name="name">Inspection Result Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inspection_tech.inspection_result.type</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Inspection Result Type.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem action="view_inspection_result_type_rfq" id="menu_view_inspection_result_type_rfq"
+            parent="configuration_menu"
+            sequence="18" groups="base.group_workorder_mgmt"/>
+    </data>
+</openerp>
